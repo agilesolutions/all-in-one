@@ -37,7 +37,7 @@ public class MultiMapTest {
 
     private List<Person> allEmployees() {
 
-        List<Person> people = Arrays.asList(
+        return Arrays.asList(
                 new Person("Alice", "HR"),
                 new Person("Bob", "Engineering"),
                 new Person("Charlie", "HR"),
