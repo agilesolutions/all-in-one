@@ -30,7 +30,7 @@ public class MultiMapTest {
         allEmployees().forEach(p -> departmentMap.put(p.department(), p));
 
         assertAll("verify departments",
-                () -> assertEquals(2, departmentMap.size()));
+                () -> assertEquals(3, departmentMap.asMap().keySet().size()));
 
     }
 
