@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertAll;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -21,7 +22,9 @@ public class MapMultiTest {
     @Test
     public void givenProcesses_whenReKey_thenReturnMultiMap() {
 
-        List<Pair<String, String>> persons = (List<Pair<String, String>>) allEmployees().stream().<Pair<String, String>> mapMulti((person, consumer) -> { consumer.accept(new ImmutablePair<String, String>(person.name(), person.department()));});
+        List<Pair<String, String>> persons = (List<Pair<String, String>>) allEmployees().stream().<Pair<String, String>>mapMulti((person, consumer) -> {
+            consumer.accept(new ImmutablePair<String, String>(person.name(), person.department()));
+        }).collect(Collectors.toUnmodifiableList());
 
 
         assertAll("verify departments",
