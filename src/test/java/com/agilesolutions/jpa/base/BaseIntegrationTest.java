@@ -1,4 +1,4 @@
-package com.base;
+package com.agilesolutions.jpa.base;
 
 import com.github.dockerjava.api.model.ExposedPort;
 import com.github.dockerjava.api.model.HostConfig;
