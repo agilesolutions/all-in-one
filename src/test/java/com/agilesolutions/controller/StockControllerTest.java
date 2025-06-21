@@ -41,7 +41,7 @@ class StockControllerTest {
         Mockito.when(stockService.getLatestStockPrices("APPL")).thenReturn(StockResponse.builder().price(1.0F).build());
 
         // THEN
-        ResultActions resultActions = mockMvc.perform(get("/stockPrices/{company}", "APPL"))
+        ResultActions resultActions = mockMvc.perform(get("/api/assets/stockPrices/{company}", "APPL"))
                 .andExpect(status().isOk())
                 //.andDo(print());
                 .andExpect(content().string(containsStringIgnoringCase("1.0")));
