@@ -1,23 +1,15 @@
 package com.agilesolutions.rest;
 
 import com.agilesolutions.config.ApplicationProperties;
-import com.agilesolutions.config.JunitConfig;
 import com.agilesolutions.config.RestConfig;
-import com.agilesolutions.dto.StockResponse;
-import com.agilesolutions.model.DailyStockData;
 import com.agilesolutions.model.StockData;
-import com.agilesolutions.service.StockService;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.test.context.ConfigDataApplicationContextInitializer;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
-
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 

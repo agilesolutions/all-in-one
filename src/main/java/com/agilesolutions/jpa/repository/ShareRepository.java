@@ -1,6 +1,6 @@
-package com.agilesolutions.repository;
+package com.agilesolutions.jpa.repository;
 
-import com.agilesolutions.model.Share;
+import com.agilesolutions.jpa.model.Share;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;

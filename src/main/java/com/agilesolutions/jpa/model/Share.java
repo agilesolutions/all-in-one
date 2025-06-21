@@ -1,4 +1,4 @@
-package com.agilesolutions.model;
+package com.agilesolutions.jpa.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

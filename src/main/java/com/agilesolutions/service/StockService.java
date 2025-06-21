@@ -2,7 +2,7 @@ package com.agilesolutions.service;
 
 import com.agilesolutions.config.ApplicationProperties;
 import com.agilesolutions.dto.StockResponse;
-import com.agilesolutions.model.DailyStockData;
+import com.agilesolutions.jpa.model.DailyStockData;
 import com.agilesolutions.model.StockData;
 import com.agilesolutions.rest.StockClient;
 import lombok.AllArgsConstructor;

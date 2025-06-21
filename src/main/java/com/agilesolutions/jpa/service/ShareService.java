@@ -1,7 +1,7 @@
-package com.agilesolutions.service;
+package com.agilesolutions.jpa.service;
 
-import com.agilesolutions.model.Share;
-import com.agilesolutions.repository.ShareRepository;
+import com.agilesolutions.jpa.model.Share;
+import com.agilesolutions.jpa.repository.ShareRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
