@@ -99,7 +99,7 @@ task copyAppInsightsAgent(type: Copy) {
 }
 
 task generateHelmChart(type: Copy) {
-    inputs.dir('helm/demo')
+    inputs.dir('helm/allinone')
     inputs.file('build.gradle')
     from('helm') {
         include 'demo/**'
