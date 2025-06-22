@@ -93,6 +93,21 @@ String branchName() {
     return hasProperty('branch.name') ? property('branch.name') : 'git branch --show-current'.execute().text.trim()
 }
 
+task copyAppInsightsAgent(type: Copy) {
+    from "${rootDir}/libs/applicationinsights-agent.jar"
+    into "${buildDir}/libs"
+}
+
+task generateHelmChart(type: Copy) {
+    inputs.dir('helm/demo')
+    inputs.file('build.gradle')
+    from('helm') {
+        include 'demo/**'
+        filter(ReplaceTokens, tokens: [appVersion: version])
+    }
+    into('build')
+
+}
 
 bootJar {
 
@@ -111,4 +126,21 @@ bootJar {
 
     }
 
+    dependsOn copyAppInsightsAgent
+
 }
+
+task dockerBuild(type: Exec) {
+    commandLine 'docker', 'build', '-t', "agilesolutions/k8sdemo:${version}", '.'
+}
+
+task dockerPush(type: Exec) {
+    commandLine 'docker', 'push', "agilesolutions/k8sdemo:${version}"
+}
+
+task release(type: GradleBuild) {
+    tasks = ['clean', 'build', 'dockerBuild', 'generateHelmChart', 'helmDeploy']
+}
+test.dependsOn generateHelmChart
+compileTestJava.dependsOn generateHelmChart
+generateHelmChart.dependsOn bootJar, jar
