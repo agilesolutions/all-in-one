@@ -6,7 +6,7 @@ import org.springframework.data.mongodb.repository.Query;
 
 import java.util.List;
 
-public interface ShareRepository extends MongoRepository<Share, String> {
+public interface MongoDBShareRepository extends MongoRepository<Share, String> {
 
     @Query("{company:'?0'}")
     Share findItemByCompany(String company);

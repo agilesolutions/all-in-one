@@ -9,7 +9,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 // Spring Data JPA creates CRUD implementation at runtime automatically.
-public interface ShareRepository extends CrudRepository<Share, Long> {
+public interface JpaShareRepository extends CrudRepository<Share, Long> {
 
 
     // it works if it matches the share field name

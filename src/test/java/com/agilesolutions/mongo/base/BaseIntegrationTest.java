@@ -1,6 +1,7 @@
 package com.agilesolutions.mongo.base;
 
 import org.springframework.boot.testcontainers.service.connection.ServiceConnection;
+import org.testcontainers.containers.MongoDBContainer;
 
 public class BaseIntegrationTest {
 
