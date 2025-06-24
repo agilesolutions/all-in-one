@@ -4,6 +4,7 @@ import com.agilesolutions.kafka.model.Share;
 import io.confluent.kafka.serializers.KafkaAvroDeserializer;
 import io.confluent.kafka.serializers.KafkaAvroDeserializerConfig;
 import io.confluent.kafka.serializers.KafkaAvroSerializer;
+import org.apache.kafka.clients.admin.NewTopic;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.clients.producer.ProducerConfig;
@@ -12,7 +13,9 @@ import org.apache.kafka.common.serialization.StringSerializer;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.kafka.config.TopicBuilder;
 import org.springframework.kafka.core.*;
+import org.springframework.kafka.test.EmbeddedKafkaBroker;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -23,6 +26,19 @@ public class KafkaConfig {
 
     @Value("${kafka.bootstrap-servers}")
     private String bootstrapServers;
+
+    @Bean
+    public EmbeddedKafkaBroker broker() {
+        return new EmbeddedKafkaBroker(1)
+                .kafkaPorts(9092)
+                .brokerListProperty("spring.kafka.bootstrap-servers"); // override application property
+    }
+
+    @Bean
+    public NewTopic topic() {
+        return TopicBuilder.name("default").partitions(1).replicas(1).build();
+    }
+
 
     @Bean
     public ConsumerFactory<String, Share> consumerFactory() {

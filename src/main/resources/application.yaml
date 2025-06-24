@@ -19,8 +19,10 @@ spring:
       database: test
       port: 27017
 
-kafka:
-  bootstrapAddress: localhost:9092
+  kafka:
+    bootstrap-servers: realKafka:9092
+    consumer:
+      auto-offset-reset: earliest
 
 logging:
   level:
