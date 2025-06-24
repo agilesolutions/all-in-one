@@ -1,4 +1,4 @@
-{"namespace": "com.agilesolutions.dto",
+{"namespace": "com.agilesolutions.kafka.model",
   "type": "record",
   "name": "Share",
   "fields": [

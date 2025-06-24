@@ -1,10 +1,11 @@
 package com.agilesolutions.config;
 
-import com.agilesolutions.dto.Share;
+import com.agilesolutions.kafka.model.Share;
+import io.confluent.kafka.serializers.KafkaAvroDeserializer;
 import io.confluent.kafka.serializers.KafkaAvroDeserializerConfig;
 import io.confluent.kafka.serializers.KafkaAvroSerializer;
-import io.confluent.kafka.serializers.KafkaAvroSerializerConfig;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
+import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.apache.kafka.common.serialization.StringSerializer;
@@ -15,6 +16,7 @@ import org.springframework.kafka.core.*;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
 
 @Configuration
 public class KafkaConfig {
@@ -27,7 +29,7 @@ public class KafkaConfig {
 
         Map<String, Object> configProps = new HashMap<>();
         configProps.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
-        configProps.put(ConsumerConfig.GROUP_ID_CONFIG, "default-task-group");
+        configProps.put(ConsumerConfig.GROUP_ID_CONFIG, "default");
         configProps.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
         configProps.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, KafkaAvroSerializer.class);
         configProps.put(KafkaAvroDeserializerConfig.SPECIFIC_AVRO_READER_CONFIG, true);
@@ -49,8 +51,27 @@ public class KafkaConfig {
     public KafkaTemplate<String, Share> kafkaTemplate() {
         var kafkaTemplate = new KafkaTemplate<>(producerFactory());
         kafkaTemplate.setConsumerFactory(consumerFactory());
-        kafkaTemplate.setDefaultTopic("default-task-group");
+        kafkaTemplate.setDefaultTopic("default");
         return kafkaTemplate;
+    }
+
+    @Bean
+    public KafkaConsumer<String, Share> kafkaConsumer() {
+
+        Properties properties = new Properties();
+        properties.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
+        properties.put(ConsumerConfig.GROUP_ID_CONFIG, "default");
+        properties.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
+        properties.put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, false);
+
+        properties.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
+        properties.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, KafkaAvroDeserializer.class);
+
+        properties.put(KafkaAvroDeserializerConfig.SCHEMA_REGISTRY_URL_CONFIG, "http://localhost:8081");
+        properties.put(KafkaAvroDeserializerConfig.SPECIFIC_AVRO_READER_CONFIG, true);  //ensures records are properly converted
+
+        return new KafkaConsumer<>(properties);
+
     }
 
 }

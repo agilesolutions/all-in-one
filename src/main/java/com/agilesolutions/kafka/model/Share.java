@@ -3,19 +3,21 @@
  *
  * DO NOT EDIT DIRECTLY
  */
-package com.agilesolutions.dto;
+package com.agilesolutions.kafka.model;
 
-import org.apache.avro.message.BinaryMessageDecoder;
-import org.apache.avro.message.BinaryMessageEncoder;
-import org.apache.avro.message.SchemaStore;
+import org.apache.avro.generic.GenericArray;
 import org.apache.avro.specific.SpecificData;
+import org.apache.avro.util.Utf8;
+import org.apache.avro.message.BinaryMessageEncoder;
+import org.apache.avro.message.BinaryMessageDecoder;
+import org.apache.avro.message.SchemaStore;
 
 @org.apache.avro.specific.AvroGenerated
 public class Share extends org.apache.avro.specific.SpecificRecordBase implements org.apache.avro.specific.SpecificRecord {
-  private static final long serialVersionUID = -3819026940367047233L;
+  private static final long serialVersionUID = 716171013646769540L;
 
 
-  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"Share\",\"namespace\":\"com.agilesolutions.dto\",\"fields\":[{\"name\":\"id\",\"type\":[\"int\",\"null\"]},{\"name\":\"company\",\"type\":[{\"type\":\"string\",\"avro.java.string\":\"String\"},\"null\"]},{\"name\":\"quantity\",\"type\":[\"int\",\"null\"]},{\"name\":\"updated\",\"type\":{\"type\":\"long\",\"logicalType\":\"timestamp-millis\"}}]}");
+  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"Share\",\"namespace\":\"com.agilesolutions.kafka.model\",\"fields\":[{\"name\":\"id\",\"type\":[\"int\",\"null\"]},{\"name\":\"company\",\"type\":[{\"type\":\"string\",\"avro.java.string\":\"String\"},\"null\"]},{\"name\":\"quantity\",\"type\":[\"int\",\"null\"]},{\"name\":\"updated\",\"type\":{\"type\":\"long\",\"logicalType\":\"timestamp-millis\"}}]}");
   public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
 
   private static final SpecificData MODEL$ = new SpecificData();
@@ -217,8 +219,8 @@ public class Share extends org.apache.avro.specific.SpecificRecordBase implement
    * Creates a new Share RecordBuilder.
    * @return A new Share RecordBuilder
    */
-  public static com.agilesolutions.dto.Share.Builder newBuilder() {
-    return new com.agilesolutions.dto.Share.Builder();
+  public static com.agilesolutions.kafka.model.Share.Builder newBuilder() {
+    return new com.agilesolutions.kafka.model.Share.Builder();
   }
 
   /**
@@ -226,11 +228,11 @@ public class Share extends org.apache.avro.specific.SpecificRecordBase implement
    * @param other The existing builder to copy.
    * @return A new Share RecordBuilder
    */
-  public static com.agilesolutions.dto.Share.Builder newBuilder(com.agilesolutions.dto.Share.Builder other) {
+  public static com.agilesolutions.kafka.model.Share.Builder newBuilder(com.agilesolutions.kafka.model.Share.Builder other) {
     if (other == null) {
-      return new com.agilesolutions.dto.Share.Builder();
+      return new com.agilesolutions.kafka.model.Share.Builder();
     } else {
-      return new com.agilesolutions.dto.Share.Builder(other);
+      return new com.agilesolutions.kafka.model.Share.Builder(other);
     }
   }
 
@@ -239,11 +241,11 @@ public class Share extends org.apache.avro.specific.SpecificRecordBase implement
    * @param other The existing instance to copy.
    * @return A new Share RecordBuilder
    */
-  public static com.agilesolutions.dto.Share.Builder newBuilder(com.agilesolutions.dto.Share other) {
+  public static com.agilesolutions.kafka.model.Share.Builder newBuilder(com.agilesolutions.kafka.model.Share other) {
     if (other == null) {
-      return new com.agilesolutions.dto.Share.Builder();
+      return new com.agilesolutions.kafka.model.Share.Builder();
     } else {
-      return new com.agilesolutions.dto.Share.Builder(other);
+      return new com.agilesolutions.kafka.model.Share.Builder(other);
     }
   }
 
@@ -268,7 +270,7 @@ public class Share extends org.apache.avro.specific.SpecificRecordBase implement
      * Creates a Builder by copying an existing Builder.
      * @param other The existing Builder to copy.
      */
-    private Builder(com.agilesolutions.dto.Share.Builder other) {
+    private Builder(com.agilesolutions.kafka.model.Share.Builder other) {
       super(other);
       if (isValidValue(fields()[0], other.id)) {
         this.id = data().deepCopy(fields()[0].schema(), other.id);
@@ -292,7 +294,7 @@ public class Share extends org.apache.avro.specific.SpecificRecordBase implement
      * Creates a Builder by copying an existing Share instance
      * @param other The existing instance to copy.
      */
-    private Builder(com.agilesolutions.dto.Share other) {
+    private Builder(com.agilesolutions.kafka.model.Share other) {
       super(SCHEMA$, MODEL$);
       if (isValidValue(fields()[0], other.id)) {
         this.id = data().deepCopy(fields()[0].schema(), other.id);
@@ -326,7 +328,7 @@ public class Share extends org.apache.avro.specific.SpecificRecordBase implement
       * @param value The value of 'id'.
       * @return This builder.
       */
-    public com.agilesolutions.dto.Share.Builder setId(java.lang.Integer value) {
+    public com.agilesolutions.kafka.model.Share.Builder setId(java.lang.Integer value) {
       validate(fields()[0], value);
       this.id = value;
       fieldSetFlags()[0] = true;
@@ -346,7 +348,7 @@ public class Share extends org.apache.avro.specific.SpecificRecordBase implement
       * Clears the value of the 'id' field.
       * @return This builder.
       */
-    public com.agilesolutions.dto.Share.Builder clearId() {
+    public com.agilesolutions.kafka.model.Share.Builder clearId() {
       id = null;
       fieldSetFlags()[0] = false;
       return this;
@@ -366,7 +368,7 @@ public class Share extends org.apache.avro.specific.SpecificRecordBase implement
       * @param value The value of 'company'.
       * @return This builder.
       */
-    public com.agilesolutions.dto.Share.Builder setCompany(java.lang.String value) {
+    public com.agilesolutions.kafka.model.Share.Builder setCompany(java.lang.String value) {
       validate(fields()[1], value);
       this.company = value;
       fieldSetFlags()[1] = true;
@@ -386,7 +388,7 @@ public class Share extends org.apache.avro.specific.SpecificRecordBase implement
       * Clears the value of the 'company' field.
       * @return This builder.
       */
-    public com.agilesolutions.dto.Share.Builder clearCompany() {
+    public com.agilesolutions.kafka.model.Share.Builder clearCompany() {
       company = null;
       fieldSetFlags()[1] = false;
       return this;
@@ -406,7 +408,7 @@ public class Share extends org.apache.avro.specific.SpecificRecordBase implement
       * @param value The value of 'quantity'.
       * @return This builder.
       */
-    public com.agilesolutions.dto.Share.Builder setQuantity(java.lang.Integer value) {
+    public com.agilesolutions.kafka.model.Share.Builder setQuantity(java.lang.Integer value) {
       validate(fields()[2], value);
       this.quantity = value;
       fieldSetFlags()[2] = true;
@@ -426,7 +428,7 @@ public class Share extends org.apache.avro.specific.SpecificRecordBase implement
       * Clears the value of the 'quantity' field.
       * @return This builder.
       */
-    public com.agilesolutions.dto.Share.Builder clearQuantity() {
+    public com.agilesolutions.kafka.model.Share.Builder clearQuantity() {
       quantity = null;
       fieldSetFlags()[2] = false;
       return this;
@@ -446,7 +448,7 @@ public class Share extends org.apache.avro.specific.SpecificRecordBase implement
       * @param value The value of 'updated'.
       * @return This builder.
       */
-    public com.agilesolutions.dto.Share.Builder setUpdated(java.time.Instant value) {
+    public com.agilesolutions.kafka.model.Share.Builder setUpdated(java.time.Instant value) {
       validate(fields()[3], value);
       this.updated = value.truncatedTo(java.time.temporal.ChronoUnit.MILLIS);
       fieldSetFlags()[3] = true;
@@ -466,7 +468,7 @@ public class Share extends org.apache.avro.specific.SpecificRecordBase implement
       * Clears the value of the 'updated' field.
       * @return This builder.
       */
-    public com.agilesolutions.dto.Share.Builder clearUpdated() {
+    public com.agilesolutions.kafka.model.Share.Builder clearUpdated() {
       fieldSetFlags()[3] = false;
       return this;
     }

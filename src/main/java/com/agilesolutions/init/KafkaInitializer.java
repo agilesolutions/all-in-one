@@ -24,9 +24,9 @@ public class KafkaInitializer implements CommandLineRunner {
     @Override
     public void run(String... args) {
 
-        Share.newBuilder().setCompany("AAPL").setId(1).setQuantity(100).setUpdated(Instant.now());
+        Share share = Share.newBuilder().setCompany("AAPL").setId(1).setQuantity(100).setUpdated(Instant.now()).build();
 
-        kafkaTemplate.send()
+        kafkaTemplate.send("default", null, share);
 
         log.info("Kafka records saved successfully-------");
 
