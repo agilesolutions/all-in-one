@@ -19,12 +19,6 @@ spring:
       database: test
       port: 27017
 
-de:
-  flapdoodle:
-    mongodb:
-      embed:
-        version: 4.0.2
-
 logging:
   level:
     root: INFO

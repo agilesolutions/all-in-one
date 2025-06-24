@@ -16,7 +16,7 @@ public interface JpaShareRepository extends CrudRepository<Share, Long> {
     List<Share> findByCompany(String company);
 
     // Custom Query
-    @Query("SELECT s FROM Share s WHERE s.publishDate > :date")
+    @Query("SELECT s FROM Share s WHERE s.updated > :date")
     List<Share> findByPublishedDateAfter(@Param("date") LocalDate date);
 
 }

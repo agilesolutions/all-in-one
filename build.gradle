@@ -61,6 +61,8 @@ dependencies {
     implementation 'com.googlecode.guava-osgi:guava-osgi:11.0.1'
     implementation 'org.apache.commons:commons-lang3:3.12.0'
     implementation 'com.h2database:h2:1.4.200'
+    implementation 'org.mongodb:mongodb-driver-core:5.1.1'
+    implementation 'org.mongodb:mongodb-driver-sync:5.1.1'
     implementation 'de.bwaldvogel:mongo-java-server:1.45.0'
     implementation 'de.bwaldvogel:mongo-java-server-memory-backend:1.45.0'
     annotationProcessor 'org.projectlombok:lombok:1.18.34'

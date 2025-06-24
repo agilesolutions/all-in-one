@@ -1,18 +1,12 @@
 package com.agilesolutions.mongo.repository;
 
 import com.agilesolutions.mongo.model.Share;
-import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
+import org.springframework.data.repository.CrudRepository;
 
-import java.util.List;
-
-public interface MongoDBShareRepository extends MongoRepository<Share, String> {
+public interface MongoDBShareRepository extends CrudRepository<Share, Long> {
 
     @Query("{company:'?0'}")
     Share findItemByCompany(String company);
 
-    @Query(fields="{'company' : 1, 'quantity' : 1}")
-    List<Share> findAll();
-
-    public long count();
 }
