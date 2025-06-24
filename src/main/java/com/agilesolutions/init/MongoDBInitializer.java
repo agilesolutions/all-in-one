@@ -25,10 +25,10 @@ public class MongoDBInitializer implements CommandLineRunner {
 
         shareRepository.saveAll(List.of(
                 Share.builder().id(1L).company("AAPL").quantity(100).updated(LocalDate.now()).build(),
-                Share.builder().id(1L).company("AMZN").quantity(100).updated(LocalDate.now()).build(),
-                Share.builder().id(1L).company("META").quantity(100).updated(LocalDate.now()).build(),
-                Share.builder().id(1L).company("MSFT").quantity(100).updated(LocalDate.now()).build(),
-                Share.builder().id(1L).company("NVDA").quantity(100).updated(LocalDate.now()).build()
+                Share.builder().id(2L).company("AMZN").quantity(100).updated(LocalDate.now()).build(),
+                Share.builder().id(3L).company("META").quantity(100).updated(LocalDate.now()).build(),
+                Share.builder().id(4L).company("MSFT").quantity(100).updated(LocalDate.now()).build(),
+                Share.builder().id(5L).company("NVDA").quantity(100).updated(LocalDate.now()).build()
         ));
 
         log.info("MongoDB records saved successfully-------");

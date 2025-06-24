@@ -15,3 +15,14 @@
 - Kustomize
 - DevOps pipeline
 - Terraform AKS
+
+## run
+
+
+```
+gradle generateAvro
+gradle bootRun
+
+http://localhost:8080/jpa/shares
+http://localhost:8080/mongo/shares
+```

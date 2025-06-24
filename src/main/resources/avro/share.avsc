@@ -1,0 +1,16 @@
+{"namespace": "com.agilesolutions.dto",
+  "type": "record",
+  "name": "Share",
+  "fields": [
+    {"name": "id",  "type": ["int", "null"]},
+    {"name": "company",  "type": ["string", "null"]},
+    {"name": "quantity",  "type": ["int", "null"]},
+   {
+      "name": "updated",
+      "type": {
+        "type": "long",
+        "logicalType": "timestamp-millis"
+      }
+    }
+  ]
+}
