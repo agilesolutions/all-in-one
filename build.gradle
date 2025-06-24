@@ -32,6 +32,7 @@ repositories {
     mavenCentral()
     maven { url 'https://repo.spring.io/milestone' }
     maven { url 'https://repo.spring.io/snapshot' }
+    maven { url 'https://packages.confluent.io/maven' }
 }
 
 dependencyManagement {
@@ -59,6 +60,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
     implementation 'org.springframework.retry:spring-retry'
     implementation 'org.apache.avro:trevni-avro:1.11.3'
+    implementation 'io.confluent:kafka-avro-serializer:7.0.1'
     implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.13.1'
     implementation 'org.slf4j:slf4j-api:2.0.13'
     implementation 'org.projectlombok:lombok:1.18.34'

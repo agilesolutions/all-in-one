@@ -19,6 +19,9 @@ spring:
       database: test
       port: 27017
 
+kafka:
+  bootstrapAddress: localhost:9092
+
 logging:
   level:
     root: INFO
