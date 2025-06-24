@@ -1,7 +1,7 @@
 package com.agilesolutions.init;
 
 
-import com.agilesolutions.dto.Share;
+import com.agilesolutions.kafka.model.Share;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -10,7 +10,6 @@ import org.springframework.stereotype.Component;
 
 import java.time.Instant;
 import java.time.LocalDate;
-import java.util.List;
 
 @Component
 @Slf4j
@@ -24,7 +23,7 @@ public class KafkaInitializer implements CommandLineRunner {
     @Override
     public void run(String... args) {
 
-        Share share = Share.newBuilder().setCompany("AAPL").setId(1).setQuantity(100).setUpdated(Instant.now()).build();
+        Share share = Share.newBuilder().setCompany("AAPL").setId(1).setQuantity(100).build();
 
         kafkaTemplate.send("default", null, share);
 

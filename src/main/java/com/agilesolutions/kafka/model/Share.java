@@ -14,16 +14,13 @@ import org.apache.avro.message.SchemaStore;
 
 @org.apache.avro.specific.AvroGenerated
 public class Share extends org.apache.avro.specific.SpecificRecordBase implements org.apache.avro.specific.SpecificRecord {
-  private static final long serialVersionUID = 716171013646769540L;
+  private static final long serialVersionUID = -7112461622301651580L;
 
 
-  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"Share\",\"namespace\":\"com.agilesolutions.kafka.model\",\"fields\":[{\"name\":\"id\",\"type\":[\"int\",\"null\"]},{\"name\":\"company\",\"type\":[{\"type\":\"string\",\"avro.java.string\":\"String\"},\"null\"]},{\"name\":\"quantity\",\"type\":[\"int\",\"null\"]},{\"name\":\"updated\",\"type\":{\"type\":\"long\",\"logicalType\":\"timestamp-millis\"}}]}");
+  public static final org.apache.avro.Schema SCHEMA$ = new org.apache.avro.Schema.Parser().parse("{\"type\":\"record\",\"name\":\"Share\",\"namespace\":\"com.agilesolutions.kafka.model\",\"fields\":[{\"name\":\"id\",\"type\":[\"int\",\"null\"]},{\"name\":\"company\",\"type\":[{\"type\":\"string\",\"avro.java.string\":\"String\"},\"null\"]},{\"name\":\"quantity\",\"type\":[\"int\",\"null\"]}]}");
   public static org.apache.avro.Schema getClassSchema() { return SCHEMA$; }
 
   private static final SpecificData MODEL$ = new SpecificData();
-  static {
-    MODEL$.addLogicalTypeConversion(new org.apache.avro.data.TimeConversions.TimestampMillisConversion());
-  }
 
   private static final BinaryMessageEncoder<Share> ENCODER =
       new BinaryMessageEncoder<>(MODEL$, SCHEMA$);
@@ -79,7 +76,6 @@ public class Share extends org.apache.avro.specific.SpecificRecordBase implement
   private java.lang.Integer id;
   private java.lang.String company;
   private java.lang.Integer quantity;
-  private java.time.Instant updated;
 
   /**
    * Default constructor.  Note that this does not initialize fields
@@ -93,13 +89,11 @@ public class Share extends org.apache.avro.specific.SpecificRecordBase implement
    * @param id The new value for id
    * @param company The new value for company
    * @param quantity The new value for quantity
-   * @param updated The new value for updated
    */
-  public Share(java.lang.Integer id, java.lang.String company, java.lang.Integer quantity, java.time.Instant updated) {
+  public Share(java.lang.Integer id, java.lang.String company, java.lang.Integer quantity) {
     this.id = id;
     this.company = company;
     this.quantity = quantity;
-    this.updated = updated.truncatedTo(java.time.temporal.ChronoUnit.MILLIS);
   }
 
   @Override
@@ -115,23 +109,8 @@ public class Share extends org.apache.avro.specific.SpecificRecordBase implement
     case 0: return id;
     case 1: return company;
     case 2: return quantity;
-    case 3: return updated;
     default: throw new IndexOutOfBoundsException("Invalid index: " + field$);
     }
-  }
-
-  private static final org.apache.avro.Conversion<?>[] conversions =
-      new org.apache.avro.Conversion<?>[] {
-      null,
-      null,
-      null,
-      new org.apache.avro.data.TimeConversions.TimestampMillisConversion(),
-      null
-  };
-
-  @Override
-  public org.apache.avro.Conversion<?> getConversion(int field) {
-    return conversions[field];
   }
 
   // Used by DatumReader.  Applications should not call.
@@ -142,7 +121,6 @@ public class Share extends org.apache.avro.specific.SpecificRecordBase implement
     case 0: id = (java.lang.Integer)value$; break;
     case 1: company = value$ != null ? value$.toString() : null; break;
     case 2: quantity = (java.lang.Integer)value$; break;
-    case 3: updated = (java.time.Instant)value$; break;
     default: throw new IndexOutOfBoundsException("Invalid index: " + field$);
     }
   }
@@ -199,23 +177,6 @@ public class Share extends org.apache.avro.specific.SpecificRecordBase implement
   }
 
   /**
-   * Gets the value of the 'updated' field.
-   * @return The value of the 'updated' field.
-   */
-  public java.time.Instant getUpdated() {
-    return updated;
-  }
-
-
-  /**
-   * Sets the value of the 'updated' field.
-   * @param value the value to set.
-   */
-  public void setUpdated(java.time.Instant value) {
-    this.updated = value.truncatedTo(java.time.temporal.ChronoUnit.MILLIS);
-  }
-
-  /**
    * Creates a new Share RecordBuilder.
    * @return A new Share RecordBuilder
    */
@@ -259,7 +220,6 @@ public class Share extends org.apache.avro.specific.SpecificRecordBase implement
     private java.lang.Integer id;
     private java.lang.String company;
     private java.lang.Integer quantity;
-    private java.time.Instant updated;
 
     /** Creates a new Builder */
     private Builder() {
@@ -284,10 +244,6 @@ public class Share extends org.apache.avro.specific.SpecificRecordBase implement
         this.quantity = data().deepCopy(fields()[2].schema(), other.quantity);
         fieldSetFlags()[2] = other.fieldSetFlags()[2];
       }
-      if (isValidValue(fields()[3], other.updated)) {
-        this.updated = data().deepCopy(fields()[3].schema(), other.updated);
-        fieldSetFlags()[3] = other.fieldSetFlags()[3];
-      }
     }
 
     /**
@@ -307,10 +263,6 @@ public class Share extends org.apache.avro.specific.SpecificRecordBase implement
       if (isValidValue(fields()[2], other.quantity)) {
         this.quantity = data().deepCopy(fields()[2].schema(), other.quantity);
         fieldSetFlags()[2] = true;
-      }
-      if (isValidValue(fields()[3], other.updated)) {
-        this.updated = data().deepCopy(fields()[3].schema(), other.updated);
-        fieldSetFlags()[3] = true;
       }
     }
 
@@ -434,45 +386,6 @@ public class Share extends org.apache.avro.specific.SpecificRecordBase implement
       return this;
     }
 
-    /**
-      * Gets the value of the 'updated' field.
-      * @return The value.
-      */
-    public java.time.Instant getUpdated() {
-      return updated;
-    }
-
-
-    /**
-      * Sets the value of the 'updated' field.
-      * @param value The value of 'updated'.
-      * @return This builder.
-      */
-    public com.agilesolutions.kafka.model.Share.Builder setUpdated(java.time.Instant value) {
-      validate(fields()[3], value);
-      this.updated = value.truncatedTo(java.time.temporal.ChronoUnit.MILLIS);
-      fieldSetFlags()[3] = true;
-      return this;
-    }
-
-    /**
-      * Checks whether the 'updated' field has been set.
-      * @return True if the 'updated' field has been set, false otherwise.
-      */
-    public boolean hasUpdated() {
-      return fieldSetFlags()[3];
-    }
-
-
-    /**
-      * Clears the value of the 'updated' field.
-      * @return This builder.
-      */
-    public com.agilesolutions.kafka.model.Share.Builder clearUpdated() {
-      fieldSetFlags()[3] = false;
-      return this;
-    }
-
     @Override
     @SuppressWarnings("unchecked")
     public Share build() {
@@ -481,7 +394,6 @@ public class Share extends org.apache.avro.specific.SpecificRecordBase implement
         record.id = fieldSetFlags()[0] ? this.id : (java.lang.Integer) defaultValue(fields()[0]);
         record.company = fieldSetFlags()[1] ? this.company : (java.lang.String) defaultValue(fields()[1]);
         record.quantity = fieldSetFlags()[2] ? this.quantity : (java.lang.Integer) defaultValue(fields()[2]);
-        record.updated = fieldSetFlags()[3] ? this.updated : (java.time.Instant) defaultValue(fields()[3]);
         return record;
       } catch (org.apache.avro.AvroMissingFieldException e) {
         throw e;
@@ -509,6 +421,99 @@ public class Share extends org.apache.avro.specific.SpecificRecordBase implement
     READER$.read(this, SpecificData.getDecoder(in));
   }
 
+  @Override protected boolean hasCustomCoders() { return true; }
+
+  @Override public void customEncode(org.apache.avro.io.Encoder out)
+    throws java.io.IOException
+  {
+    if (this.id == null) {
+      out.writeIndex(1);
+      out.writeNull();
+    } else {
+      out.writeIndex(0);
+      out.writeInt(this.id);
+    }
+
+    if (this.company == null) {
+      out.writeIndex(1);
+      out.writeNull();
+    } else {
+      out.writeIndex(0);
+      out.writeString(this.company);
+    }
+
+    if (this.quantity == null) {
+      out.writeIndex(1);
+      out.writeNull();
+    } else {
+      out.writeIndex(0);
+      out.writeInt(this.quantity);
+    }
+
+  }
+
+  @Override public void customDecode(org.apache.avro.io.ResolvingDecoder in)
+    throws java.io.IOException
+  {
+    org.apache.avro.Schema.Field[] fieldOrder = in.readFieldOrderIfDiff();
+    if (fieldOrder == null) {
+      if (in.readIndex() != 0) {
+        in.readNull();
+        this.id = null;
+      } else {
+        this.id = in.readInt();
+      }
+
+      if (in.readIndex() != 0) {
+        in.readNull();
+        this.company = null;
+      } else {
+        this.company = in.readString();
+      }
+
+      if (in.readIndex() != 0) {
+        in.readNull();
+        this.quantity = null;
+      } else {
+        this.quantity = in.readInt();
+      }
+
+    } else {
+      for (int i = 0; i < 3; i++) {
+        switch (fieldOrder[i].pos()) {
+        case 0:
+          if (in.readIndex() != 0) {
+            in.readNull();
+            this.id = null;
+          } else {
+            this.id = in.readInt();
+          }
+          break;
+
+        case 1:
+          if (in.readIndex() != 0) {
+            in.readNull();
+            this.company = null;
+          } else {
+            this.company = in.readString();
+          }
+          break;
+
+        case 2:
+          if (in.readIndex() != 0) {
+            in.readNull();
+            this.quantity = null;
+          } else {
+            this.quantity = in.readInt();
+          }
+          break;
+
+        default:
+          throw new java.io.IOException("Corrupt ResolvingDecoder.");
+        }
+      }
+    }
+  }
 }
 
 

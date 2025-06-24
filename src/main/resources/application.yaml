@@ -20,7 +20,9 @@ spring:
       port: 27017
 
   kafka:
-    bootstrap-servers: realKafka:9092
+    embedded:
+      kraft: true
+    bootstrap-servers: localhost:54773
     consumer:
       auto-offset-reset: earliest
 
@@ -29,6 +31,10 @@ logging:
     root: INFO
     com.agilesolutions.mcp: DEBUG
     org.springframework.ai: DEBUG
+
+auto:
+  register:
+    schema: false
 
 management:
   endpoints:

@@ -1,21 +1,26 @@
 package com.agilesolutions.config;
 
 import com.agilesolutions.kafka.model.Share;
+import com.agilesolutions.kafka.serdes.AvroDeserializer;
+import com.agilesolutions.kafka.serdes.AvroSerializer;
 import io.confluent.kafka.serializers.KafkaAvroDeserializer;
 import io.confluent.kafka.serializers.KafkaAvroDeserializerConfig;
 import io.confluent.kafka.serializers.KafkaAvroSerializer;
+import io.confluent.kafka.serializers.KafkaAvroSerializerConfig;
 import org.apache.kafka.clients.admin.NewTopic;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.clients.producer.ProducerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.apache.kafka.common.serialization.StringSerializer;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.config.TopicBuilder;
 import org.springframework.kafka.core.*;
 import org.springframework.kafka.test.EmbeddedKafkaBroker;
+import org.springframework.kafka.test.EmbeddedKafkaKraftBroker;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -24,14 +29,11 @@ import java.util.Properties;
 @Configuration
 public class KafkaConfig {
 
-    @Value("${kafka.bootstrap-servers}")
-    private String bootstrapServers;
-
     @Bean
     public EmbeddedKafkaBroker broker() {
-        return new EmbeddedKafkaBroker(1)
-                .kafkaPorts(9092)
-                .brokerListProperty("spring.kafka.bootstrap-servers"); // override application property
+        EmbeddedKafkaBroker broker = new EmbeddedKafkaKraftBroker(1, 1, "default")
+                .brokerProperties(Map.of("listeners","PLAINTEXT://localhost:9092", "port", "9092" ));
+        return broker;
     }
 
     @Bean
@@ -41,13 +43,13 @@ public class KafkaConfig {
 
 
     @Bean
-    public ConsumerFactory<String, Share> consumerFactory() {
+    public ConsumerFactory<String, Share> consumerFactory(EmbeddedKafkaBroker broker) {
 
         Map<String, Object> configProps = new HashMap<>();
-        configProps.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
+        configProps.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, broker.getBrokersAsString());
         configProps.put(ConsumerConfig.GROUP_ID_CONFIG, "default");
         configProps.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
-        configProps.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, KafkaAvroSerializer.class);
+        configProps.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, AvroDeserializer.class);
         configProps.put(KafkaAvroDeserializerConfig.SPECIFIC_AVRO_READER_CONFIG, true);
         configProps.put(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
 
@@ -55,18 +57,19 @@ public class KafkaConfig {
     }
 
     @Bean
-    public ProducerFactory<String, Share> producerFactory() {
+    public ProducerFactory<String, Share> producerFactory(EmbeddedKafkaBroker broker) {
         Map<String, Object> props = new HashMap<>();
-        props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
+        props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, broker.getBrokersAsString());
         props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
-        props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, KafkaAvroSerializer.class);
+        props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, AvroSerializer.class);
+        props.put(KafkaAvroSerializerConfig.SCHEMA_REGISTRY_URL_CONFIG, "http://localhost:8081");
         return new DefaultKafkaProducerFactory<>(props);
     }
 
     @Bean
-    public KafkaTemplate<String, Share> kafkaTemplate() {
-        var kafkaTemplate = new KafkaTemplate<>(producerFactory());
-        kafkaTemplate.setConsumerFactory(consumerFactory());
+    public KafkaTemplate<String, Share> kafkaTemplate(EmbeddedKafkaBroker broker) {
+        var kafkaTemplate = new KafkaTemplate<>(producerFactory(broker));
+        kafkaTemplate.setConsumerFactory(consumerFactory(broker));
         kafkaTemplate.setDefaultTopic("default");
         return kafkaTemplate;
     }
