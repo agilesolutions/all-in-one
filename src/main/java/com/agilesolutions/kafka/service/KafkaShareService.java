@@ -3,15 +3,12 @@ package com.agilesolutions.kafka.service;
 import com.agilesolutions.kafka.model.Share;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.kafka.clients.consumer.ConsumerRecord;
+import org.apache.kafka.clients.consumer.Consumer;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
-import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.Duration;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -20,7 +17,7 @@ import java.util.List;
 public class KafkaShareService {
 
     @Autowired
-    private final KafkaConsumer<String, Share> consumer;
+    private final Consumer<String, Share> consumer;
 
 
 
@@ -28,18 +25,30 @@ public class KafkaShareService {
 
         List<Share> shares = new ArrayList<>();
 
-        consumer.subscribe(Collections.singleton("default"));
-
         log.info("Get all Shares");
 
-        ConsumerRecords<String, Share> records = consumer.poll(Duration.ofMillis(100));
+        final int giveUp = 100;   int noRecordsCount = 0;
 
-        for (ConsumerRecord<String, Share> record : records) {
-            shares.add((Share) record.value().get("content"));
-            log.info("Message time: " + record.value().get("date_time"));
+        while (true) {
+            //polling the records since the last offset.
+            final ConsumerRecords<String, Share> consumerRecords =
+                    consumer.poll(1000);
+
+            if (consumerRecords.count()==0) {
+                noRecordsCount++;
+                if (noRecordsCount > giveUp) break;
+                else continue;
+            }
+            //Printing the messages received in a for loop
+            consumerRecords.forEach(record -> {
+                System.out.printf("Consumer Record:(%d, %s, %d, %d)\n",
+                        record.key(), record.value(),
+                        record.partition(), record.offset());
+            });
+            //committing the offset of messages in Async mode
+            consumer.commitAsync();
         }
-        consumer.commitAsync();
-
+        consumer.close();
         return shares;
 
     }

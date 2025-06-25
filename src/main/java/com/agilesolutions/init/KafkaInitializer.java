@@ -3,6 +3,7 @@ package com.agilesolutions.init;
 
 import com.agilesolutions.kafka.model.Share;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.kafka.clients.producer.RecordMetadata;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.kafka.core.KafkaTemplate;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Component;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutionException;
 
 @Component
 @Slf4j
@@ -23,11 +25,13 @@ public class KafkaInitializer implements CommandLineRunner {
 
 
     @Override
-    public void run(String... args) {
+    public void run(String... args) throws ExecutionException, InterruptedException {
 
         Share share = Share.newBuilder().setCompany("AAPL").setId(1).setQuantity(100).build();
 
         CompletableFuture<SendResult<String, Share>> future = kafkaTemplate.send("default", null, share);
+
+        SendResult metadata = future.get();
 
         future.whenComplete((result, ex) -> {
 
