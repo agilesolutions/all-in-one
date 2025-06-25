@@ -1,5 +1,7 @@
 package com.agilesolutions.kafka.serdes;
 
+import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.avro.generic.GenericRecord;
 import org.apache.avro.io.DatumReader;
@@ -12,9 +14,10 @@ import org.apache.kafka.common.serialization.Deserializer;
 import java.util.Map;
 
 @Slf4j
+@NoArgsConstructor
 public class AvroDeserializer<T extends SpecificRecordBase> implements Deserializer {
 
-    protected final Class<T> targetType;
+    protected Class<T> targetType;
 
     public AvroDeserializer(Class<T> targetType) {
         this.targetType = targetType;

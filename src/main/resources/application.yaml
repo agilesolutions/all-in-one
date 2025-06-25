@@ -29,19 +29,25 @@ spring:
 logging:
   level:
     root: INFO
-    com.agilesolutions.mcp: DEBUG
-    org.springframework.ai: DEBUG
+    com.agilesolutions.kafka: DEBUG
+    org.springframework.jpa: DEBUG
+    org.springframework.mongo: DEBUG
 
 auto:
   register:
     schema: false
 
 management:
+  tracing:
+    enabled: true
   endpoints:
     web:
       exposure:
         include: health,metrics,prometheus
   metrics:
+    mongo:
+      command:
+        enabled: false
     export:
       prometheus:
         enabled: true

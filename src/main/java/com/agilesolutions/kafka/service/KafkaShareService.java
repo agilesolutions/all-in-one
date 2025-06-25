@@ -26,9 +26,9 @@ public class KafkaShareService {
 
     public List<Share> getAllShares() {
 
-        consumer.subscribe(Collections.singleton("default"));
-
         List<Share> shares = new ArrayList<>();
+
+        consumer.subscribe(Collections.singleton("default"));
 
         log.info("Get all Shares");
 

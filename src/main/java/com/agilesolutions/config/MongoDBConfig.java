@@ -1,13 +1,21 @@
 package com.agilesolutions.config;
 
+import com.agilesolutions.actuator.CustomMongoHealthIndicator;
 import com.agilesolutions.mongo.repository.MongoDBShareRepository;
+import com.mongodb.client.MongoClient;
 import de.bwaldvogel.mongo.MongoServer;
 import de.bwaldvogel.mongo.backend.memory.MemoryBackend;
+import io.micrometer.observation.ObservationRegistry;
+import org.springframework.boot.actuate.data.mongo.MongoHealthIndicator;
+import org.springframework.boot.actuate.health.HealthIndicator;
+import org.springframework.boot.autoconfigure.mongo.MongoClientSettingsBuilderCustomizer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.mongodb.MongoDatabaseFactory;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.SimpleMongoClientDatabaseFactory;
+import org.springframework.data.mongodb.observability.ContextProviderFactory;
+import org.springframework.data.mongodb.observability.MongoObservationCommandListener;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
 @Configuration
@@ -30,5 +38,19 @@ public class MongoDBConfig {
         MongoServer mongoServer = new MongoServer(new MemoryBackend());
         mongoServer.bind();
         return mongoServer;
+    }
+
+    // Registering MongoDB Micrometer customizer setup
+    @Bean
+    MongoClientSettingsBuilderCustomizer mongoMetricsSynchronousContextProvider(ObservationRegistry registry) {
+        return (clientSettingsBuilder) -> {
+            clientSettingsBuilder.contextProvider(ContextProviderFactory.create(registry))
+                    .addCommandListener(new MongoObservationCommandListener(registry));
+        };
+    }
+
+    @Bean
+    public CustomMongoHealthIndicator mongoHealthIndicator(MongoTemplate mongoTemplate) {
+        return new CustomMongoHealthIndicator(mongoTemplate);
     }
 }
