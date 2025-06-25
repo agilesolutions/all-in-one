@@ -17,6 +17,7 @@ import java.util.List;
 public class MvcConfig  implements WebMvcConfigurer {
 
 
+    @Override
     public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
         converters.add(new AvroJsonHttpMessageConverter<SpecificRecordBase>());
     }
