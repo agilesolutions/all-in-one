@@ -74,16 +74,15 @@ public class KafkaConfig {
         Map<String, Object> props = new HashMap<>();
         props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, broker.getBrokersAsString());
         props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
-        props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, CustomKafkaAvroSerializer.class);
+        props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, AvroSerializer.class);
         props.put("schema.registry.url", "http://localhost:8081");
 
-        return new DefaultKafkaProducerFactory<>(props);
+        return new DefaultKafkaProducerFactory<>(props, new StringSerializer(), new AvroSerializer<Share>());
     }
 
     @Bean
     public KafkaTemplate<String, Share> kafkaTemplate(EmbeddedKafkaBroker broker) {
         var kafkaTemplate = new KafkaTemplate<>(producerFactory(broker));
-        //kafkaTemplate.setConsumerFactory(consumerFactory(broker));
         kafkaTemplate.setDefaultTopic("default");
         return kafkaTemplate;
     }

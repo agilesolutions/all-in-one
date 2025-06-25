@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 @Service
 @Slf4j
@@ -23,13 +24,15 @@ public class KafkaShareService {
 
     public List<Share> getAllShares() {
 
+        AtomicBoolean continueProcessing = new AtomicBoolean(true);
+
         List<Share> shares = new ArrayList<>();
 
         log.info("Get all Shares");
 
         final int giveUp = 100;   int noRecordsCount = 0;
 
-        while (true) {
+        while (continueProcessing.get()) {
             //polling the records since the last offset.
             final ConsumerRecords<String, Share> consumerRecords =
                     consumer.poll(1000);
@@ -41,14 +44,13 @@ public class KafkaShareService {
             }
             //Printing the messages received in a for loop
             consumerRecords.forEach(record -> {
-                System.out.printf("Consumer Record:(%d, %s, %d, %d)\n",
-                        record.key(), record.value(),
-                        record.partition(), record.offset());
+                shares.add(record.value());
+                continueProcessing.set(false);
             });
             //committing the offset of messages in Async mode
             consumer.commitAsync();
         }
-        consumer.close();
+        //consumer.close();
         return shares;
 
     }

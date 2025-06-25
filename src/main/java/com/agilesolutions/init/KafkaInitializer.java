@@ -3,15 +3,12 @@ package com.agilesolutions.init;
 
 import com.agilesolutions.kafka.model.Share;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.kafka.clients.producer.RecordMetadata;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.support.SendResult;
 import org.springframework.stereotype.Component;
 
-import java.time.Instant;
-import java.time.LocalDate;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
@@ -44,7 +41,7 @@ public class KafkaInitializer implements CommandLineRunner {
             }
         });
 
-        log.info("Kafka records saved successfully-------");
+        log.info("Kafka records published successfully-------");
 
     }
 }
