@@ -18,7 +18,7 @@ public class KafkaShareController {
 
     private final KafkaShareService shareService;
 
-    @GetMapping
+    @GetMapping(produces = "application/avro+json")
     List<Share> getAllShares() {
 
         log.info("Get all shares");
